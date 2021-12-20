@@ -41,6 +41,10 @@ code {
   padding: 5px;
 }
 
+.pokemonbox h1 {
+  text-transform: capitalize;
+}
+
 .pokemonbox .pokemontable {
   text-align: center;
 }
