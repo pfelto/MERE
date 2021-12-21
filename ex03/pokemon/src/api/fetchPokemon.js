@@ -29,7 +29,8 @@ export default function fetchPokemon(pokemon) {
       return data;
     })
     .catch((err) => {
-      console.log(err);
+      console.log("here1");
+      throw err;
     });
 }
 

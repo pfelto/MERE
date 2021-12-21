@@ -45,6 +45,16 @@ code {
   text-transform: capitalize;
 }
 
+.pokemonbox .pokemonimg {
+  border: black solid 1px;
+  padding: 5px;
+}
+
+.pokemonbox .pokemonimg img {
+  width: 150px;
+  height: 150px;
+}
+
 .pokemonbox .pokemontable {
   text-align: center;
 }
