@@ -1,7 +1,8 @@
 import { useState } from "react";
 import PokemonForm from "./component/PokemonForm";
-import { MemoPokemonBox } from "./component/PokemonBox";
+import PokemonBox from "./component/PokemonBox";
 import ErrorBoundary from "./ErrorBoundary";
+import PokemonErrorView from "./component/PokemonErrorView";
 
 function App() {
   const [inputSearch, setInputSearch] = useState("");
@@ -14,7 +15,11 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCompletedSearch(inputSearch);
+  };
+
+  const resetFunction = () => {
     setInputSearch("");
+    setCompletedSearch("");
   };
 
   return (
@@ -27,8 +32,12 @@ function App() {
         />
         <p>Out of ideas? Try Pikachu, Charizard, or Ninetales.</p>
       </div>
-      <ErrorBoundary>
-        <MemoPokemonBox completedSearch={completedSearch} />
+      <ErrorBoundary
+        FallbackComp={PokemonErrorView}
+        key={completedSearch}
+        resetFunction={resetFunction}
+      >
+        <PokemonBox completedSearch={completedSearch} />
       </ErrorBoundary>
     </div>
   );

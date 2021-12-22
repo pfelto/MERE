@@ -1,59 +1,45 @@
 import React, { useState, useEffect } from "react";
-import PokemonTitle from "./PokemonTitle";
-import PokemonImage from "./PokemonImage";
-import PokemonTable from "./PokemonTable";
 import fetchPokemon from "../api/fetchPokemon";
-
-const initPokemon = {
-  species: "",
-  number: "",
-  sprite: "",
-  baseStats: {
-    hp: "-",
-    attack: "-",
-    defense: "-",
-    specialattack: "-",
-    specialdefense: "-",
-    speed: "-",
-  },
-};
+import PokemonInfoView from "./PokemonInfoView";
+import PokemonIdleView from "./PokemonIdleView";
+import PokemonLoadingView from "./PokemonLoadingView";
 
 function PokemonBox({ completedSearch }) {
-  const [pokemon, setPokemon] = useState(initPokemon);
-  const [isLoading, setLoading] = useState(false);
+  const [pokemon, setPokemon] = useState(null);
+  const [status, setStatus] = useState(completedSearch ? "loading" : "idle");
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!completedSearch) {
+      setStatus("idle");
       return;
     }
-    setLoading(true);
-    fetchPokemon(completedSearch.toLowerCase())
-      .then((data) => {
-        setPokemon({
-          ...data.data.getPokemon,
+
+    setStatus("loading");
+    setTimeout(() => {
+      fetchPokemon(completedSearch.toLowerCase())
+        .then((data) => {
+          setPokemon({
+            ...data.data.getPokemon,
+          });
+          setStatus("ok");
+        })
+        .catch((err) => {
+          setError(err);
+          setStatus("rejected");
         });
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
+    }, 3000);
   }, [completedSearch]);
 
-  if (error) throw error;
-
-  return (
-    <div className="pokemonbox">
-      <PokemonTitle
-        pnum={pokemon.num}
-        pspecies={pokemon.species}
-        isLoading={isLoading}
-      />
-      <PokemonImage psprite={pokemon.sprite} />
-      <PokemonTable stats={pokemon.baseStats} />
-    </div>
-  );
+  if (status === "ok") {
+    return <PokemonInfoView pokemon={pokemon} />;
+  } else if (status === "idle") {
+    return <PokemonIdleView />;
+  } else if (status === "loading") {
+    return <PokemonLoadingView status={status} pokemonName={completedSearch} />;
+  } else {
+    throw error;
+  }
 }
 
-export const MemoPokemonBox = React.memo(PokemonBox);
+export default PokemonBox;

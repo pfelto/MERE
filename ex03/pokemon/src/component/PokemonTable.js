@@ -1,6 +1,15 @@
 import React from "react";
 
-export default function PokemonTable({ stats }) {
+export default function PokemonTable({
+  stats = {
+    hp: "-",
+    attack: "-",
+    defense: "-",
+    specialattack: "-",
+    specialdefense: "-",
+    speed: "-",
+  },
+}) {
   const theaddata = Object.keys(stats).map((stat) => {
     return <td key={stat}>{stat.toUpperCase()}</td>;
   });

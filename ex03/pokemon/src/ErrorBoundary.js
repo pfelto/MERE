@@ -9,12 +9,14 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.error) {
+    const { error } = this.state;
+    const { FallbackComp, resetFunction, children } = this.props;
+    if (error) {
       // You can render any custom fallback UI
-      return <h1>Something went wrong. Error: {this.state.error.message}</h1>;
+      return <FallbackComp error={error} />;
     }
 
-    return this.props.children;
+    return children;
   }
 }
 

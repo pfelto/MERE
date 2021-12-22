@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function PokemonImage({ psprite }) {
+export default function PokemonImage({
+  psprite = "",
+  status = "",
+  error = null,
+}) {
   return (
     <div className="pokemonimg">
       <img
