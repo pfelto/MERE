@@ -4,7 +4,7 @@ export const NumberInput = ({ initialSearch, onChange }) => {
   return (
     <input
       type="number"
-      id="characternum"
+      id="characterNum"
       min={1}
       //max={826}
       value={initialSearch}

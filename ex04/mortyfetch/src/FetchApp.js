@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { CharacterInfoCard } from "./components/InfoCard/CharacterInfoCard";
 import { FetchForm } from "./components/FetchForm";
-import ErrorBoundary from "./ErrorBoundary";
 
 export const FetchApp = () => {
   const [submittedSearch, setSubmittedSearch] = useState("");
   const [initialSearch, setInitialSearch] = useState("");
+  const [fetchStatus, getFetchStatus] = useState("idle");
 
   function handleSubmit(e) {
     e.preventDefault();
-    setSubmittedSearch(initialSearch);
+    setSubmittedSearch(parseInt(initialSearch));
   }
 
   function handleChange(e) {
-    setInitialSearch(parseInt(e.target.value));
+    setInitialSearch(e.target.value);
   }
 
   function handleRandom() {
@@ -21,6 +21,19 @@ export const FetchApp = () => {
     setInitialSearch(randomNum);
     setSubmittedSearch(randomNum);
   }
+
+  //i want to use component composition here and also need to disable buttons as needed
+
+  //Disable on loading, need variable to track that
+  const disabledByPending = fetchStatus === "pending";
+
+  const disableSubmit = disabledByPending || !initialSearch;
+
+  /*
+    ||
+    (initialSearch === submittedSearch &&
+      ["resolved", "rejected"].includes(fetchStatus));
+      */
 
   return (
     <div>
@@ -30,9 +43,7 @@ export const FetchApp = () => {
         onChange={handleChange}
         onClick={handleRandom}
       />
-      <ErrorBoundary key={submittedSearch}>
-        <CharacterInfoCard submittedSearch={submittedSearch} />
-      </ErrorBoundary>
+      <CharacterInfoCard submittedSearch={submittedSearch} />
     </div>
   );
 };

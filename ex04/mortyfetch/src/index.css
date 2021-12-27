@@ -13,5 +13,50 @@ code {
 }
 
 .box {
+  margin: 2px;
+  padding: 5px;
+  display: flex;
+}
+
+.mortyinfo {
+  flex: 1;
+  margin-left: 2.5px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+
+.mortyimg {
+  height: 100px;
+  width: 100px;
+  border-radius: 10%;
+  margin-right: 2.5px;
   border: 1px black solid;
+}
+
+.mortyinfo h1 {
+  margin: 0;
+}
+
+.red {
+  border-color: red;
+  color: red;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: calc(100% - 32px);
+  height: calc(100% - 32px);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
