@@ -1,6 +1,6 @@
 import React from "react";
 
-export const NumberInput = ({ initialSearch, onChange }) => {
+export const NumberInput = ({ initialSearch, onChange, disabled }) => {
   return (
     <input
       type="number"
@@ -10,6 +10,7 @@ export const NumberInput = ({ initialSearch, onChange }) => {
       value={initialSearch}
       onChange={onChange}
       placeholder="Pick a number!"
+      disabled={disabled}
     ></input>
   );
 };

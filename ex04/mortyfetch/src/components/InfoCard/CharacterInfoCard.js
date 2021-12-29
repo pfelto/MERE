@@ -5,12 +5,18 @@ import { CharacterIdleView } from "./CharacterIdleView";
 import { CharacterLoadingView } from "./CharacterLoadingView";
 import { CharacterErrorView } from "./CharacterErrorView";
 
-export const CharacterInfoCard = ({ submittedSearch }) => {
+export const CharacterInfoCard = ({ submittedSearch, getStatus }) => {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(submittedSearch ? "pending" : "idle");
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    getStatus(status);
+  }, [status, getStatus]);
+
+  useEffect(() => {
+    let _isMounted = true;
+
     if (!submittedSearch) {
       setStatus("idle");
       return;
@@ -19,15 +25,22 @@ export const CharacterInfoCard = ({ submittedSearch }) => {
     setTimeout(() => {
       getCharacter(submittedSearch).then(
         (info) => {
-          setData(info);
-          setStatus("resolved");
+          if (_isMounted) {
+            setData(info);
+            setStatus("resolved");
+          }
         },
         (error) => {
-          setError(error);
-          setStatus("rejected");
+          if (_isMounted) {
+            setError(error);
+            setStatus("rejected");
+          }
         }
       );
     }, 2000);
+    return () => {
+      _isMounted = false;
+    };
   }, [submittedSearch]);
 
   if (status === "resolved") {

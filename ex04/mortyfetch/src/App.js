@@ -11,7 +11,7 @@ function App() {
         mounted={mounted}
         setMounted={() => setMounted((mounted) => !mounted)}
       />
-      <FetchApp />
+      {mounted ? <FetchApp /> : null}
     </div>
   );
 }
