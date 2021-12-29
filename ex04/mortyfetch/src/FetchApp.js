@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { CharacterInfoCard } from "./components/InfoCard/CharacterInfoCard";
 import { FetchForm } from "./components/FetchForm";
+import { RandomCharacterButton } from "./components/RandomCharacterButton";
+import { NumberInput } from "./components/NumberInput";
+import { FormSubmit } from "./components/FormSubmit";
 
 export const FetchApp = () => {
   const [submittedSearch, setSubmittedSearch] = useState("");
